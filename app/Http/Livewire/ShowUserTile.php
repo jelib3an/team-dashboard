@@ -10,35 +10,39 @@ class ShowUserTile extends Component
 {
     public $user;
 
-    public $localtime;
-
-    public $addHour = 0;
+    protected $addMinute = 0;
 
     public $icon = 'day';
 
     protected $listeners = ['sliderChanged'];
 
+    public function sliderChanged($value)
+    {
+        $this->addMinute = $value;
+        $this->changeIcon();
+    }
+
     public function mount(User $user)
     {
         $this->user = $user;
-        $this->hydrate();
+        $this->changeIcon();
     }
 
-    public function hydrate()
+    public function changeIcon()
     {
-        $this->localtime = Carbon::now($this->user->timezone)->addHours($this->addHour);
-        $hour = $this->localtime->hour;
-        if ($hour >= 20 || $hour <= 8) {
+        $this->icon = 'day';
+
+        $hour = $this->getLocaltimeProperty()->hour;
+        if ($hour >= 20 || $hour <= 7) {
             $this->icon = 'night';
-        } elseif ($hour >= 12) {
+        } elseif ($hour >= 14) {
             $this->icon = 'noon';
         }
     }
 
-    public function sliderChanged($value)
+    public function getLocaltimeProperty()
     {
-        $this->addHour = $value;
-        $this->hydrate();
+        return Carbon::now($this->user->timezone)->addMinutes($this->addMinute);
     }
 
     public function render()
