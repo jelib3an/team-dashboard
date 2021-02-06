@@ -14,21 +14,21 @@ class ShowUserTile extends Component
 
     public $icon = 'day';
 
-    public $shade = 400;
-
     public function mount(User $user)
     {
         $this->user = $user;
-        $this->localtime = Carbon::now($this->user->timezone);
+        $this->hydrate();
+    }
 
+    public function hydrate()
+    {
+        $this->localtime = Carbon::now($this->user->timezone);
         $hour = $this->localtime->hour;
         if ($hour >= 20 || $hour <= 8) {
             $this->icon = 'night';
         } elseif ($hour >= 12) {
             $this->icon = 'noon';
         }
-
-        $this->shade = ($hour % 9) * 100 ?? 100;
     }
 
     public function render()
