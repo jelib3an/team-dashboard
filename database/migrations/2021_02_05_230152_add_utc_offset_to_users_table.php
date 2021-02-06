@@ -16,6 +16,7 @@ class AddUtcOffsetToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('timezone');
             $table->foreignId('team_id')->constrained();
+            $table->dropColumn(['email', 'email_verified_at', 'password', 'remember_token']);
         });
     }
 
@@ -29,6 +30,10 @@ class AddUtcOffsetToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['team_id']);
             $table->dropColumn(['timezone', 'team_id']);
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
         });
     }
 }
