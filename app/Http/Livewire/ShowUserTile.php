@@ -45,6 +45,27 @@ class ShowUserTile extends Component
         return Carbon::now($this->user->timezone)->addMinutes($this->addMinute);
     }
 
+    public function getUnavailabilityTextProperty()
+    {
+        $localtime = $this->getLocaltimeProperty();
+        $blackouts = $this->user->blackoutTimes->filter(function ($blackout) use ($localtime) {
+            $beginString = $localtime->format('Y-m-d ') . $blackout->local_begin_time;
+            $begin = new Carbon($beginString, $this->user->timezone);
+
+            $endString = $localtime->format('Y-m-d ') . $blackout->local_end_time;
+            $end = new Carbon($endString, $this->user->timezone);
+
+            $day = $localtime->format('D');
+
+            if (in_array($day, $blackout->days) && $begin <= $localtime && $localtime <= $end) {
+                return true;
+            }
+            return false;
+        });
+
+        return optional($blackouts->first())->label ?? '';
+    }
+
     public function render()
     {
         return view('livewire.show-user-tile');

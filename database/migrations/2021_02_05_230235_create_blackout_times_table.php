@@ -18,8 +18,8 @@ class CreateBlackoutTimesTable extends Migration
             $table->timestamps();
             $table->foreignId('user_id')->constrained();
             $table->string('label');
-            $table->string('begin_time');
-            $table->string('end_time');
+            $table->string('local_begin_time');
+            $table->string('local_end_time');
             $table->mediumText('days');
         });
     }

@@ -18,8 +18,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
     ];
 
     /**
@@ -28,17 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
         'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -49,5 +37,13 @@ class User extends Authenticatable
     public function getUtcOffsetMinutesAttribute()
     {
         return Carbon::createFromTimestamp(0, $this->timezone)->offsetMinutes;
+    }
+
+    /**
+     * Get the blackout times for the user.
+     */
+    public function blackoutTimes()
+    {
+        return $this->hasMany(BlackoutTime::class);
     }
 }
