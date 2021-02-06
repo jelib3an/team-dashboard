@@ -2,8 +2,7 @@
   <div class="flex flex-row">
     @if (count($team->users))
       <div class="px-2 w-full">
-        <input oninput="Livewire.emit('sliderChanged', this.value)" type="range" class="w-full"
-          min="0" max="5760" step="20" value="0" />
+        @livewire('slider', ['max' => 60 * 24 * 4, 'step' => 20])
       </div>
     @endif
   </div>

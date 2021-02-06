@@ -10,7 +10,7 @@ class ShowUserTile extends Component
 {
     public $user;
 
-    protected $addMinute = 0;
+    protected $addMinute;
 
     public $icon = 'day';
 
@@ -25,6 +25,7 @@ class ShowUserTile extends Component
     public function mount(User $user)
     {
         $this->user = $user;
+        $this->addMinute = session('sliderState') ?? 0;
         $this->changeIcon();
     }
 
