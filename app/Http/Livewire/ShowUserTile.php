@@ -8,13 +8,20 @@ use Livewire\Component;
 
 class ShowUserTile extends Component
 {
+    protected $addMinute;
+
     public $user;
 
-    protected $addMinute;
+    public $isYou;
 
     public $icon = 'day';
 
-    protected $listeners = ['sliderChanged'];
+    protected $listeners = ['sliderChanged', 'userSwitched'];
+
+    public function userSwitched($userId)
+    {
+        $this->isYou = $userId == $this->user->id;
+    }
 
     public function sliderChanged($value)
     {
@@ -25,6 +32,7 @@ class ShowUserTile extends Component
     public function mount(User $user)
     {
         $this->user = $user;
+        $this->isYou = $user->id == optional(request()->user())->id;
         $this->addMinute = session('sliderState') ?? 0;
         $this->changeIcon();
     }
@@ -39,6 +47,14 @@ class ShowUserTile extends Component
         } elseif ($hour >= 14) {
             $this->icon = 'noon';
         }
+    }
+
+    public function getDisplayNameProperty()
+    {
+        if ($this->isYou) {
+            return 'YOU!';
+        }
+        return $this->user->name;
     }
 
     public function getLocaltimeProperty()

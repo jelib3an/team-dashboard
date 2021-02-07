@@ -16,7 +16,7 @@ class AddTimezoneToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('timezone');
             $table->foreignId('team_id')->constrained();
-            $table->dropColumn(['email', 'email_verified_at', 'password', 'remember_token']);
+            $table->dropColumn(['email', 'email_verified_at', 'password']);
         });
     }
 
@@ -33,7 +33,6 @@ class AddTimezoneToUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
         });
     }
 }

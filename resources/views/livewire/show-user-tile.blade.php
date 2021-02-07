@@ -1,6 +1,7 @@
-<div class="flex flex-col bg-white overflow-hidden shadow rounded-lg" wire:poll.10s>
-  <div class="flex-grow px-4 py-5 sm:p-6">
-    <div class="flex items-center" x-data="{ icon: @entangle('icon') }">
+<div class="flex flex-col overflow-hidden shadow rounded-lg" wire:poll.10s
+  x-data="{ icon: @entangle('icon'), isYou: @entangle('isYou') }">
+  <div class="flex-grow px-4 py-5 sm:p-6" :class="{'rounded-lg border-2 border-gray-400': isYou}">
+    <div class="flex items-center">
       <div x-cloak x-show="icon === 'day'" class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
@@ -24,7 +25,7 @@
       </div>
       <div class="ml-5 w-0 flex-1">
         <dt class="text-sm font-medium text-gray-500 truncate">
-          {{ $this->user->name }}
+          {{ $this->display_name }}
           {{ $this->unavailability_text ? "({$this->unavailability_text})" : '' }}
         </dt>
         <dd class="flex items-baseline">
