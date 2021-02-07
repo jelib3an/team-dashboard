@@ -14,9 +14,8 @@ class Team extends Seeder
      */
     public function run()
     {
-        ModelsTeam::create(['key' => 'team-a', 'name' => 'Team A']);
-        ModelsTeam::create(['key' => 'team-b', 'name' => 'Team B']);
-        ModelsTeam::create(['key' => 'team-c', 'name' => 'Team C']);
-        ModelsTeam::create(['key' => 'team-d', 'name' => 'Team D']);
+        ModelsTeam::create(['slug' => 'product-team', 'name' => 'Product Team']);
+        ModelsTeam::create(['slug' => 'dev-team', 'name' => 'Development Team']);
+        ModelsTeam::create(['slug' => 'qa-team', 'name' => 'Quality Assurance Team']);
     }
 }

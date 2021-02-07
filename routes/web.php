@@ -18,6 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/{team:key}', function (Team $team) {
+Route::get('/{team:slug}', function (Team $team) {
     return view('dashboard', ['team' => $team]);
 });
