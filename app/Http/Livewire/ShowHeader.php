@@ -9,6 +9,8 @@ class ShowHeader extends Component
 {
     public $user;
 
+    public $team;
+
     protected $listeners = ['userSwitched'];
 
     public function userSwitched($userId)
@@ -17,11 +19,6 @@ class ShowHeader extends Component
         if ($userId) {
             $this->user = User::findOrFail($userId);
         }
-    }
-
-    public function mount($user)
-    {
-        $this->user = $user;
     }
 
     public function render()

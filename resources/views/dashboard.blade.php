@@ -1,6 +1,6 @@
 <x-layout>
   <div class="container m-auto my-2">
-    @livewire('show-header', ['user' => request()->user()])
+    @livewire('show-header', ['user' => request()->user(), 'team' => $team])
     <div class="mt-4 flex flex-row">
       @if (count($team->users))
         <div class="px-2 w-full">
