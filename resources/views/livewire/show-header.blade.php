@@ -29,6 +29,7 @@
           Add user
         </button>
       </x-slot>
+      @livewire('show-add-user-form', ['team' => $team])
     </x-slideover>
   </div>
 </div>
