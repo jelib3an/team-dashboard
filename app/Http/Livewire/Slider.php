@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Slider extends Component
 {
-    public $value;
+    public $value = 0;
 
     public $min = 0;
 
@@ -16,16 +16,7 @@ class Slider extends Component
 
     public function updatedValue($value)
     {
-        session(['sliderState' => $value]);
-    }
-
-    public function mount($value = null)
-    {
-        if (isset($value)) {
-            $this->value = $value;
-        } else {
-            $this->value = session('sliderState') ?? 0;
-        }
+        $this->emit('sliderChanged', $value);
     }
 
     public function render()

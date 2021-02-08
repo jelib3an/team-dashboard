@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class ShowUserTile extends Component
 {
-    protected $addMinute;
+    protected $addMinute = 0;
 
     public $user;
 
@@ -27,14 +27,19 @@ class ShowUserTile extends Component
     {
         $this->addMinute = $value;
         $this->changeIcon();
+        session(['sliderState' => $value]);
     }
 
     public function mount(User $user)
     {
         $this->user = $user;
         $this->isYou = $user->id == optional(request()->user())->id;
-        $this->addMinute = session('sliderState') ?? 0;
         $this->changeIcon();
+    }
+
+    public function hydrate()
+    {
+        $this->addMinute = session('sliderState') ?? 0;
     }
 
     public function changeIcon()
