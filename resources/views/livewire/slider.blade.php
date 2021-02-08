@@ -15,7 +15,7 @@
       </div>
       <div class="ml-3">
         <p class="text-sm font-medium text-yellow-600">
-          Great Scott! Going back to the future.
+          Great Scott! You're traveling back to the future!
         </p>
       </div>
     </div>
