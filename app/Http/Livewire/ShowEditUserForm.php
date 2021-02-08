@@ -13,6 +13,8 @@ class ShowEditUserForm extends Component
 
     public $blackoutTimes;
 
+    protected $listeners = ['resetForm'];
+
     protected $messages = [
         'blackoutTimes.*.label.required' => 'The activity field is required.',
         'blackoutTimes.*.days.min' => 'The recurring days field must have at least :min items.',
@@ -42,6 +44,13 @@ class ShowEditUserForm extends Component
         $this->blackoutTimes = $user->blackoutTimes;
     }
 
+    public function resetForm()
+    {
+        $this->user->refresh();
+        $this->blackoutTimes = $this->user->blackoutTimes;
+        $this->resetValidation();
+    }
+
     public function save()
     {
         $this->validate();
@@ -50,6 +59,7 @@ class ShowEditUserForm extends Component
         $this->blackoutTimes->each(function ($blackoutTime) {
             $blackoutTime->save();
         });
+        session()->flash('userFormMessage', 'Success!');
     }
 
     public function render()
