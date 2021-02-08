@@ -17,6 +17,7 @@
             Edit your settings
           </button>
         </x-slot>
+        @livewire('show-edit-user-form', ['user' => $user])
       </x-slideover>
     @endif
     @php
