@@ -13,7 +13,10 @@ class ShowEditUserForm extends Component
 
     public $blackoutTimes;
 
-    protected $listeners = ['resetForm'];
+    protected $listeners = [
+        'resetForm',
+        'userSwitched'
+    ];
 
     protected $messages = [
         'blackoutTimes.*.*.required' => 'Field is required.',
@@ -65,6 +68,14 @@ class ShowEditUserForm extends Component
         $this->user->refresh();
         $this->blackoutTimes = $this->user->blackoutTimes;
         $this->resetValidation();
+    }
+
+    public function userSwitched($userId)
+    {
+        if ($userId) {
+            $this->user = User::findOrFail($userId);
+            $this->blackoutTimes = $this->user->blackoutTimes;
+        }
     }
 
     public function save()
