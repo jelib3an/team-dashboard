@@ -8,14 +8,16 @@ use Livewire\Component;
 
 class UserSwitcher extends Component
 {
-    public $options;
-
     public $selectedUserId;
 
     public function mount()
     {
-        $this->options = User::orderBy('name')->get(['id', 'name']);
         $this->selectedUserId = optional(request()->user())->id;
+    }
+
+    public function getOptionsProperty()
+    {
+        return User::orderBy('name')->pluck('name', 'id');
     }
 
     public function updatedSelecteduserid($value)

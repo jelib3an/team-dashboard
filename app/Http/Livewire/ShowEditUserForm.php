@@ -16,8 +16,8 @@ class ShowEditUserForm extends Component
     protected $listeners = ['resetForm'];
 
     protected $messages = [
-        'blackoutTimes.*.label.required' => 'The activity field is required.',
-        'blackoutTimes.*.days.min' => 'The recurring days field must have at least :min items.',
+        'blackoutTimes.*.*.required' => 'Field is required.',
+        'blackoutTimes.*.days.min' => 'Recurring days must have at least :min items.',
     ];
 
     protected function rules()
@@ -35,6 +35,22 @@ class ShowEditUserForm extends Component
             ],
             'blackoutTimes.*.label' => 'required',
             'blackoutTimes.*.days' => 'array|min:1',
+            'blackoutTimes.*.local_begin_time' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/', $value)) {
+                        $fail('Time must be in 24-hour format (eg. 13:00)');
+                    }
+                },
+            ],
+            'blackoutTimes.*.local_end_time' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/', $value)) {
+                        $fail('Time must be in 24-hour format (eg. 13:00)');
+                    }
+                },
+            ],
         ];
     }
 
