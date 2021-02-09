@@ -1,5 +1,5 @@
 <div x-data="{ show: true }">
-  <div class="rounded-md bg-green-50 p-4" x-show="show">
+  <div class="rounded-md bg-green-50 p-2" x-show="show">
     <div class="flex">
       <div class="flex-shrink-0">
         <!-- Heroicon name: solid/check-circle -->
