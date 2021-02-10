@@ -1,14 +1,14 @@
 <div class="md:flex md:items-center md:justify-between">
   <div class="flex-1 min-w-0">
     <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-      Hello {{ $this->user ? $this->user->name : 'Guest' }}!
+      Hello {{ $this->user['name'] ?? 'Guest' }}!
     </h2>
   </div>
   <div class="mt-4 flex md:mt-0 md:ml-4">
     @livewire('user-switcher')
-    @if ($this->user)
+    @if (isset($this->user['name']))
       @php
-        $title = "{$this->user->name}: Edit";
+        $title = "{$this->user['name']}: Edit";
       @endphp
       <x-overlays.slideover :title="$title">
         <x-slot name="button">
@@ -17,11 +17,11 @@
             Edit your settings
           </button>
         </x-slot>
-        @livewire('show-edit-user-form', ['user' => $user])
+        @livewire('show-edit-user-form', ['user' => $this->user])
       </x-overlays.slideover>
     @endif
     @php
-      $title = "{$this->team->name}: Add";
+      $title = "{$this->teamName}: Add";
     @endphp
     <x-overlays.slideover :title="$title">
       <x-slot name="button">
@@ -30,7 +30,7 @@
           Add user
         </button>
       </x-slot>
-      @livewire('show-add-user-form', ['team' => $team])
+      @livewire('show-add-user-form', ['teamId' => $this->teamId])
     </x-overlays.slideover>
   </div>
 </div>

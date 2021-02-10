@@ -22,9 +22,9 @@ class ShowEditUserForm extends Component
         'userSwitched'
     ];
 
-    public function mount(User $user)
+    public function mount(array $user)
     {
-        $this->user = json_decode((new ResourcesUser($user))->toJson(), true);
+        $this->user = $user;
     }
 
     public function resetForm()

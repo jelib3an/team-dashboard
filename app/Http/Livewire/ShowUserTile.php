@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Resources\User as ResourcesUser;
 use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -20,7 +21,7 @@ class ShowUserTile extends Component
 
     public function userSwitched($userId)
     {
-        $this->isYou = $userId == $this->user->id;
+        $this->isYou = $userId == $this->user['id'];
     }
 
     public function sliderChanged($value)
@@ -32,7 +33,7 @@ class ShowUserTile extends Component
 
     public function mount(User $user)
     {
-        $this->user = $user;
+        $this->user = json_decode((new ResourcesUser($user))->toJson(), true);
         $this->isYou = $user->id == optional(request()->user())->id;
         $this->changeIcon();
     }
@@ -59,25 +60,25 @@ class ShowUserTile extends Component
         if ($this->isYou) {
             return 'YOU!';
         }
-        return $this->user->name;
+        return $this->user['name'];
     }
 
     public function getLocaltimeProperty()
     {
-        return Carbon::now($this->user->timezone)->addMinutes($this->addMinute);
+        return Carbon::now($this->user['timezone'])->addMinutes($this->addMinute);
     }
 
     public function getUnavailabilityTextProperty()
     {
         $localtime = $this->getLocaltimeProperty();
-        $blackouts = $this->user->blackoutTimes->filter(function ($blackout) use ($localtime) {
-            $parsed = explode(':', $blackout->local_begin_time);
+        $blackouts = collect($this->user['blackoutTimes'])->filter(function ($blackout) use ($localtime) {
+            $parsed = explode(':', $blackout['local_begin_time']);
             $begin = $localtime->copy()
                         ->setHour(intval($parsed[0]))
                         ->setMinute(intval($parsed[1]))
                         ->setSecond(0);
 
-            $parsed = explode(':', $blackout->local_end_time);
+            $parsed = explode(':', $blackout['local_end_time']);
             $end = $localtime->copy()
                         ->setHour(intval($parsed[0]))
                         ->setMinute(intval($parsed[1]))
@@ -85,20 +86,20 @@ class ShowUserTile extends Component
 
             $day = $begin->format('D');
             if ($begin <= $end) {
-                if (in_array($day, $blackout->days) && $begin <= $localtime && $localtime <= $end) {
+                if (in_array($day, $blackout['days']) && $begin <= $localtime && $localtime <= $end) {
                     return true;
                 }
             } else {
                 // range spans multiple multiple days, break it up into two chunks
 
                 // if localtime is before midnight - check if it is between begin and midnight
-                if (in_array($day, $blackout->days) && $begin <= $localtime && $localtime <= $begin->copy()->endOfDay()) {
+                if (in_array($day, $blackout['days']) && $begin <= $localtime && $localtime <= $begin->copy()->endOfDay()) {
                     return true;
                 }
 
                 // if localtime is after midnight - check if it is between midnight and end
                 $yesterday = $begin->copy()->subDay()->format('D');
-                if (in_array($yesterday, $blackout->days) && $end->copy()->startOfDay() <= $localtime && $localtime <= $end) {
+                if (in_array($yesterday, $blackout['days']) && $end->copy()->startOfDay() <= $localtime && $localtime <= $end) {
                     return true;
                 }
             }
@@ -106,7 +107,7 @@ class ShowUserTile extends Component
             return false;
         });
 
-        return optional($blackouts->first())->label ?? '';
+        return $blackouts->first()['label'] ?? '';
     }
 
     public function render()
