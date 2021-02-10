@@ -35,6 +35,7 @@ class ShowUserTile extends Component
     {
         $this->user = json_decode((new ResourcesUser($user))->toJson(), true);
         $this->isYou = $user->id == optional(request()->user())->id;
+        session(['sliderState' => 0]);
         $this->changeIcon();
     }
 
