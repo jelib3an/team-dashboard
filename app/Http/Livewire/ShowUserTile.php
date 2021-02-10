@@ -19,9 +19,9 @@ class ShowUserTile extends Component
 
     protected $listeners = ['sliderChanged', 'userSwitched'];
 
-    public function userSwitched($userId)
+    public function userSwitched(?array $user)
     {
-        $this->isYou = $userId == $this->user['id'];
+        $this->isYou = ($user['id'] ?? null) == $this->user['id'];
     }
 
     public function sliderChanged($value)

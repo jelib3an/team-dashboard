@@ -33,10 +33,10 @@ class ShowEditUserForm extends Component
         $this->resetValidation();
     }
 
-    public function userSwitched($userId)
+    public function userSwitched(?array $user)
     {
-        if ($userId) {
-            $this->user = json_decode((new ResourcesUser(User::findOrFail($userId)))->toJson(), true);
+        if ($user) {
+            $this->user = $user;
         }
     }
 

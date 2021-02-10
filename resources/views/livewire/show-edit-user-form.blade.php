@@ -11,20 +11,24 @@
             <input wire:model="user.name" type="text" name="name" id="name"
               autocomplete="given-name"
               class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+            <div>
+              @error('user.name')
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </div>
+              @enderror
+            </div>
+          </div>
+          <div>
             @error('user.name')
-              <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                    clip-rule="evenodd" />
-                </svg>
-              </div>
+              <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
             @enderror
           </div>
-          @error('user.name')
-            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-          @enderror
         </div>
 
         <div
@@ -62,20 +66,25 @@
                   name="activity-{{ $i }}" id="activity-{{ $i }}"
                   autocomplete="activity" placeholder="eg. Meeting, Sleeping"
                   class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+                <div>
+                  @error("user.blackoutTimes.$i.label")
+                    <div
+                      class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                  @enderror
+                </div>
+              </div>
+              <div>
                 @error("user.blackoutTimes.$i.label")
-                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
-                    </svg>
-                  </div>
+                  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
               </div>
-              @error("user.blackoutTimes.$i.label")
-                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-              @enderror
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
               <label for="begin-{{ $i }}"
@@ -87,20 +96,25 @@
                   type="text" name="begin-{{ $i }}" id="begin-{{ $i }}"
                   placeholder="13:00"
                   class="max-w-lg block min-w-min shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+                <div>
+                  @error("user.blackoutTimes.$i.local_begin_time")
+                    <div
+                      class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                  @enderror
+                </div>
+              </div>
+              <div>
                 @error("user.blackoutTimes.$i.local_begin_time")
-                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
-                    </svg>
-                  </div>
+                  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
               </div>
-              @error("user.blackoutTimes.$i.local_begin_time")
-                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-              @enderror
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
               <label for="end-{{ $i }}"
@@ -112,20 +126,25 @@
                   type="text" name="end-{{ $i }}" id="end-{{ $i }}"
                   placeholder="15:30"
                   class="max-w-lg block min-w-min shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+                <div>
+                  @error("user.blackoutTimes.$i.local_end_time")
+                    <div
+                      class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                  @enderror
+                </div>
+              </div>
+              <div>
                 @error("user.blackoutTimes.$i.local_end_time")
-                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
-                    </svg>
-                  </div>
+                  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
               </div>
-              @error("user.blackoutTimes.$i.local_end_time")
-                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-              @enderror
             </div>
             <div class="space-y-6 sm:space-y-5 divide-y divide-gray-200">
               <div class="pt-1 sm:pt-5">
@@ -136,10 +155,12 @@
                         id="label-recurring">
                         Recurring
                       </div>
-                      @error("user.blackoutTimes.$i.days")
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}
-                        </p>
-                      @enderror
+                      <div>
+                        @error("user.blackoutTimes.$i.days")
+                          <p class="mt-2 text-sm text-red-600">{{ $message }}
+                          </p>
+                        @enderror
+                      </div>
                     </div>
                     <div class="min-w-max mt-2 grid grid-cols-2">
                       @php
@@ -182,12 +203,13 @@
 
       <div class="pt-5">
         <div class="flex justify-end">
-          @if ($errors->count())
-            <x-feedback.alert-failure message="Error!" />
-          @endif
-          @if (session()->has('userFormMessage'))
-            <x-feedback.alert-success :message="session('userFormMessage')" />
-          @endif
+          <div>
+            @if ($errors->count())
+              <x-feedback.alert-failure message="Error!" />
+            @elseif (session()->has('userFormMessage'))
+              <x-feedback.alert-success :message="session('userFormMessage')" />
+            @endif
+          </div>
           <x-elements.button-gray @click.prevent="open = false">Close</x-elements.button-gray>
           <x-elements.button-gray wire:click="resetForm">Reset</x-elements.button-gray>
           <x-elements.button-indigo type="submit">Save</x-elements.button-indigo>

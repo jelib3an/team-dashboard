@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Http\Resources\User as ResourcesUser;
-use App\Models\User;
 use Livewire\Component;
 
 class ShowHeader extends Component
@@ -16,12 +15,9 @@ class ShowHeader extends Component
 
     protected $listeners = ['userSwitched'];
 
-    public function userSwitched($userId)
+    public function userSwitched(?array $user)
     {
-        $this->user = null;
-        if ($userId) {
-            $this->user = json_decode((new ResourcesUser(User::findOrFail($userId)))->toJson(), true);
-        }
+        $this->user = $user;
     }
 
     public function mount($user, $team)

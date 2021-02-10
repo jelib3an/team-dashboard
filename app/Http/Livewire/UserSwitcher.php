@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Resources\User as ResourcesUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -30,9 +31,10 @@ class UserSwitcher extends Component
         if ($value > 0) {
             $user = User::findOrFail($value);
             Auth::login($user);
+            $user = json_decode((new ResourcesUser($user))->toJson(), true);
         }
 
-        $this->emit('userSwitched', $user->id ?? null);
+        $this->emit('userSwitched', $user);
     }
 
     public function render()
