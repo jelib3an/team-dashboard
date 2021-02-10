@@ -49,8 +49,8 @@
           </h3>
         </div>
 
-        @foreach ($this->blackoutTimes as $i => $blackoutTime)
-          <div wire:key="user-blackout-{{ $blackoutTime->id }}" class="space-y-4 sm:space-y-3">
+        @foreach ($this->user['blackoutTimes'] as $i => $blackoutTime)
+          <div wire:key="user-blackout-{{ $blackoutTime['id'] }}" class="space-y-4 sm:space-y-3">
             <div
               class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
               <label for="activity-{{ $i }}"
@@ -58,11 +58,11 @@
                 Activity
               </label>
               <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                <input wire:model="blackoutTimes.{{ $i }}.label" type="text"
+                <input wire:model="user.blackoutTimes.{{ $i }}.label" type="text"
                   name="activity-{{ $i }}" id="activity-{{ $i }}"
                   autocomplete="activity" placeholder="eg. Meeting, Sleeping"
                   class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                @error("blackoutTimes.$i.label")
+                @error("user.blackoutTimes.$i.label")
                   <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -73,7 +73,7 @@
                   </div>
                 @enderror
               </div>
-              @error("blackoutTimes.$i.label")
+              @error("user.blackoutTimes.$i.label")
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
               @enderror
             </div>
@@ -83,11 +83,11 @@
                 Begin time (24-format)
               </label>
               <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                <input wire:model="blackoutTimes.{{ $i }}.local_begin_time" type="text"
-                  name="begin-{{ $i }}" id="begin-{{ $i }}"
+                <input wire:model="user.blackoutTimes.{{ $i }}.local_begin_time"
+                  type="text" name="begin-{{ $i }}" id="begin-{{ $i }}"
                   placeholder="13:00"
                   class="max-w-lg block min-w-min shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                @error("blackoutTimes.$i.local_begin_time")
+                @error("user.blackoutTimes.$i.local_begin_time")
                   <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -98,7 +98,7 @@
                   </div>
                 @enderror
               </div>
-              @error("blackoutTimes.$i.local_begin_time")
+              @error("user.blackoutTimes.$i.local_begin_time")
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
               @enderror
             </div>
@@ -108,10 +108,11 @@
                 End time (24-format)
               </label>
               <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                <input wire:model="blackoutTimes.{{ $i }}.local_end_time" type="text"
-                  name="end-{{ $i }}" id="end-{{ $i }}" placeholder="15:30"
+                <input wire:model="user.blackoutTimes.{{ $i }}.local_end_time"
+                  type="text" name="end-{{ $i }}" id="end-{{ $i }}"
+                  placeholder="15:30"
                   class="max-w-lg block min-w-min shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                @error("blackoutTimes.$i.local_end_time")
+                @error("user.blackoutTimes.$i.local_end_time")
                   <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -122,7 +123,7 @@
                   </div>
                 @enderror
               </div>
-              @error("blackoutTimes.$i.local_end_time")
+              @error("user.blackoutTimes.$i.local_end_time")
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
               @enderror
             </div>
@@ -135,7 +136,7 @@
                         id="label-recurring">
                         Recurring
                       </div>
-                      @error("blackoutTimes.$i.days")
+                      @error("user.blackoutTimes.$i.days")
                         <p class="mt-2 text-sm text-red-600">{{ $message }}
                         </p>
                       @enderror
@@ -156,7 +157,7 @@
                         <div class="max-w-lg space-y-4">
                           <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                              <input wire:model="blackoutTimes.{{ $i }}.days"
+                              <input wire:model="user.blackoutTimes.{{ $i }}.days"
                                 value="{{ $key }}"
                                 id="days-{{ $i }}-{{ $key }}"
                                 name="days-{{ $i }}-{{ $key }}"

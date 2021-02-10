@@ -2,90 +2,53 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\Api\UserController;
+use App\Http\Livewire\Traits\SharesValidation;
+use App\Http\Resources\User as ResourcesUser;
 use App\Models\User;
-use App\Timezones\Timezones;
-use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
 class ShowEditUserForm extends Component
 {
-    public $user;
+    use SharesValidation;
 
-    public $blackoutTimes;
+    protected $prefix = 'user';
+
+    public $user;
 
     protected $listeners = [
         'resetForm',
         'userSwitched'
     ];
 
-    protected $messages = [
-        'blackoutTimes.*.*.required' => 'Field is required.',
-        'blackoutTimes.*.days.min' => 'Recurring days must have at least :min items.',
-    ];
-
-    protected function rules()
-    {
-        return  [
-            'user.name' => [
-                'required',
-                'string',
-                'min:1',
-                Rule::unique('users', 'name')->ignore($this->user->id),
-            ],
-            'user.timezone' => [
-                'required',
-                Rule::in(Timezones::$all),
-            ],
-            'blackoutTimes.*.label' => 'required',
-            'blackoutTimes.*.days' => 'array|min:1',
-            'blackoutTimes.*.local_begin_time' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (!preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/', $value)) {
-                        $fail('Time must be in 24-hour format (eg. 13:00)');
-                    }
-                },
-            ],
-            'blackoutTimes.*.local_end_time' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (!preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/', $value)) {
-                        $fail('Time must be in 24-hour format (eg. 13:00)');
-                    }
-                },
-            ],
-        ];
-    }
-
     public function mount(User $user)
     {
-        $this->user = $user;
-        $this->blackoutTimes = $user->blackoutTimes;
+        $this->user = json_decode((new ResourcesUser($user))->toJson(), true);
     }
 
     public function resetForm()
     {
-        $this->user->refresh();
-        $this->blackoutTimes = $this->user->blackoutTimes;
+        $this->user = json_decode((new ResourcesUser(User::findOrFail($this->user['id'])))->toJson(), true);
         $this->resetValidation();
     }
 
     public function userSwitched($userId)
     {
         if ($userId) {
-            $this->user = User::findOrFail($userId);
-            $this->blackoutTimes = $this->user->blackoutTimes;
+            $this->user = json_decode((new ResourcesUser(User::findOrFail($userId)))->toJson(), true);
         }
     }
 
     public function save()
     {
         $this->validate();
-        $this->user->save();
-        // TODO adding and deleting
-        $this->blackoutTimes->each(function ($blackoutTime) {
-            $blackoutTime->save();
-        });
+
+        app()->call(UserController::class.'@update', [
+            'request' => (new Request())->merge($this->user),
+            'id' => $this->user['id'],
+        ]);
+
         session()->flash('userFormMessage', 'Success!');
     }
 
