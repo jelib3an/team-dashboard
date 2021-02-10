@@ -182,6 +182,9 @@
 
       <div class="pt-5">
         <div class="flex justify-end">
+          @if ($errors->count())
+            <x-feedback.alert-failure message="Error!" />
+          @endif
           @if (session()->has('userFormMessage'))
             <x-feedback.alert-success :message="session('userFormMessage')" />
           @endif
