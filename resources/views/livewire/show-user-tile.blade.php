@@ -1,6 +1,14 @@
 <div class="flex flex-col overflow-hidden shadow rounded-lg" wire:poll.10s
   x-data="{ icon: @entangle('icon'), isYou: @entangle('isYou') }">
-  <div class="flex-grow px-4 py-5 sm:p-6" :class="{'rounded-lg border-2 border-gray-400': isYou}">
+  <div class="px-4 py-2 sm:px-4" :class="{'bg-blue-300': isYou, 'bg-blue-100': !isYou}">
+    <div class="text-lg">
+      <span class="text-gray-800 font-bold">{{ $this->display_name }}</span>
+      <span class="text-xs font-semibold text-red-600 align-middle">
+        {{ $this->unavailability_text ? "($this->unavailability_text)" : '' }}
+      </span>
+    </div>
+  </div>
+  <div class="flex-grow px-4 py-3 sm:p-6 bg-blue-50">
     <div class="flex items-center">
       <div x-cloak x-show="icon === 'day'" class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -25,11 +33,10 @@
       </div>
       <div class="ml-5 w-0 flex-1">
         <dt class="text-sm font-medium text-gray-500 truncate">
-          {{ $this->display_name }}
-          {{ $this->unavailability_text ? "({$this->unavailability_text})" : '' }}
+          {{ $this->user['timezone'] }}
         </dt>
         <dd class="flex items-baseline">
-          <div class="text-2xl font-semibold text-gray-900">
+          <div class="text-2xl font-semibold text-gray-800">
             {{ $this->localtime->format('D g:iA') }}
           </div>
         </dd>
