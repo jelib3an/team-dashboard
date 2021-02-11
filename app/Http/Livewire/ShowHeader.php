@@ -13,9 +13,12 @@ class ShowHeader extends Component
 
     public $teamName;
 
-    protected $listeners = ['userSwitched'];
+    protected $listeners = [
+        'userSwitched' => 'userUpdated',
+        'userUpdated' => 'userUpdated',
+    ];
 
-    public function userSwitched(?array $user)
+    public function userUpdated(?array $user)
     {
         $this->user = $user;
     }

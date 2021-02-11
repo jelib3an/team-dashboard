@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Http\Controllers\Api\UserController;
-use App\Http\Livewire\Traits\SharesValidation;
 use App\Http\Resources\User as ResourcesUser;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,8 +10,6 @@ use Livewire\Component;
 
 class ShowEditUserForm extends Component
 {
-    //use SharesValidation;
-
     protected $prefix = 'user';
 
     public $user;
@@ -44,12 +41,15 @@ class ShowEditUserForm extends Component
     {
         //$this->validate();
 
-        app()->call(UserController::class.'@update', [
+        $response = app()->call(UserController::class.'@update', [
             'request' => (new Request())->merge($this->user),
             'id' => $this->user['id'],
         ]);
 
+        $this->user = json_decode($response->toJson(), true);
+
         session()->flash('userFormMessage', 'Success!');
+        $this->emit('userUpdated', $this->user);
     }
 
     public function render()

@@ -17,11 +17,18 @@ class ShowUserTile extends Component
 
     public $icon = 'day';
 
-    protected $listeners = ['sliderChanged', 'userSwitched'];
+    protected $listeners = ['sliderChanged', 'userSwitched', 'userUpdated'];
 
     public function userSwitched(?array $user)
     {
         $this->isYou = ($user['id'] ?? null) == $this->user['id'];
+    }
+
+    public function userUpdated(?array $user)
+    {
+        if ($this->user['id'] == $user['id']) {
+            $this->user = $user;
+        }
     }
 
     public function sliderChanged($value)
