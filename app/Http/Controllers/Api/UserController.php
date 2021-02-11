@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\Interfaces\HasValidation;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User as ResourcesUser;
 use App\Models\User;
@@ -10,7 +9,7 @@ use App\Timezones\Timezones;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class UserController extends Controller implements HasValidation
+class UserController extends Controller
 {
     public static function messages()
     {

@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class ShowEditUserForm extends Component
 {
-    use SharesValidation;
+    //use SharesValidation;
 
     protected $prefix = 'user';
 
@@ -42,7 +42,7 @@ class ShowEditUserForm extends Component
 
     public function save()
     {
-        $this->validate();
+        //$this->validate();
 
         app()->call(UserController::class.'@update', [
             'request' => (new Request())->merge($this->user),
