@@ -40,8 +40,8 @@
             @php
               $timezones = \App\Timezones\Timezones::$all;
             @endphp
-            <x-forms.select wire:model="user.timezone" id="timezone" name="timezone"
-              autocomplete="timezone" :options="array_combine($timezones, $timezones)" />
+            <x-forms.select-searchable model="user.timezone" id="timezone" name="timezone"
+              :options="json_encode($timezones)" />
           </div>
         </div>
       </div>
