@@ -1,8 +1,11 @@
 {{-- requires lodash --}}
+{{-- Required props:
+  * options: a normalized array of options each with keys ['id' => $id, 'text' => $text]
+  * wire:model the livewire model to bind value to --}}
 <div x-data="{
   isOpen: false,
   options: {{ $options }},
-  selected: $wire.entangle('{{ $model }}'),
+  selected: $wire.entangle('{{ $attributes->wire('model')->value() }}'),
   hovered: '',
 }">
   <div class="mt-1 relative">
@@ -27,12 +30,12 @@
       <ul tabindex="-1" role="listbox" aria-labelledby="listbox-label"
         aria-activedescendant="listbox-item-3"
         class="max-h-80 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-        <template x-for="option in options" :key="option">
-          <li role="option" @mouseenter.debounce.0="hovered = option"
-            @click="selected = option; isOpen = false"
-            :class="{ 'text-white bg-blue-500': hovered === option, 'text-gray-900': hovered !== option}"
+        <template x-for="option in options" :key="option.id">
+          <li role="option" @mouseenter.debounce.0="hovered = option.id"
+            @click="selected = option.id; isOpen = false"
+            :class="{ 'text-white bg-blue-500': hovered === option.id, 'text-gray-900': hovered !== option.id}"
             class="text-gray-900 cursor-default select-none relative pl-3 pr-9">
-            <span class="font-normal block truncate" x-text="option"></span>
+            <span class="font-normal block truncate" x-text="option.text"></span>
           </li>
         </template>
       </ul>

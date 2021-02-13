@@ -33,14 +33,18 @@
 
         <div
           class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-          <label for="country" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+          <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
             Timezone
           </label>
           <div class="mt-1 sm:mt-0 sm:col-span-2">
             @php
-              $timezones = \App\Timezones\Timezones::$all;
+              $timezones = collect(\App\Timezones\Timezones::$all)
+                  ->map(function ($timezone) {
+                      return ['id' => $timezone, 'text' => $timezone];
+                  })
+                  ->all();
             @endphp
-            <x-forms.select-searchable model="user.timezone" id="timezone" name="timezone"
+            <x-forms.select-searchable wire:model="user.timezone"
               :options="json_encode($timezones)" />
           </div>
         </div>
