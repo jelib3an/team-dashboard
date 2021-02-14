@@ -1,19 +1,16 @@
 <form wire:submit.prevent="save" class="space-y-8 divide-y divide-gray-200">
-  <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+  <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5 sm:border-t sm:border-gray-200">
     <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
       <div class="space-y-6 sm:space-y-5">
-        <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-          <x-forms.input-validation name="name" label="Name" wire:model="user.name"
-            placeholder="John" />
-        </div>
 
-        <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-          <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        <x-forms.input-validation name="name" label="Name" wire:model="user.name"
+          placeholder="John" />
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">
             Timezone
           </label>
-          <div class="mt-1 sm:mt-0 sm:col-span-2">
+          <div class="mt-1 w-full sm:max-w-xs">
             @php
               $timezones = \App\Timezones\Timezones::$all;
             @endphp
@@ -32,76 +29,22 @@
 
         @foreach ($this->user['blackoutTimes'] as $i => $blackoutTime)
           <div wire:key="user-blackout-{{ $blackoutTime['id'] }}"
-            class="space-y-4 sm:space-y-3 pt-4">
-            <div
-              class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+            class="pt-4 space-y-6 sm:space-y-5">
 
-              <x-forms.input-validation name="blackoutTimes.{{ $i }}.label"
-                wire:model="user.blackoutTimes.{{ $i }}.label" label="Activity"
-                placeholder="eg. Meeting, Sleeping" />
-            </div>
-            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-              <label for="begin-{{ $i }}"
-                class="mt-4 block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                Begin time (24-format)
-              </label>
-              <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                <input wire:model="user.blackoutTimes.{{ $i }}.local_begin_time"
-                  type="text" name="begin-{{ $i }}" id="begin-{{ $i }}"
-                  placeholder="13:00"
-                  class="max-w-lg block min-w-min shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                <div>
-                  @error("blackoutTimes.$i.local_begin_time")
-                    <div
-                      class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                          clip-rule="evenodd" />
-                      </svg>
-                    </div>
-                  @enderror
-                </div>
-              </div>
-              <div>
-                @error("blackoutTimes.$i.local_begin_time")
-                  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-              </div>
-            </div>
-            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-              <label for="end-{{ $i }}"
-                class="mt-4 block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                End time (24-format)
-              </label>
-              <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                <input wire:model="user.blackoutTimes.{{ $i }}.local_end_time"
-                  type="text" name="end-{{ $i }}" id="end-{{ $i }}"
-                  placeholder="15:30"
-                  class="max-w-lg block min-w-min shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                <div>
-                  @error("blackoutTimes.$i.local_end_time")
-                    <div
-                      class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                          clip-rule="evenodd" />
-                      </svg>
-                    </div>
-                  @enderror
-                </div>
-              </div>
-              <div>
-                @error("blackoutTimes.$i.local_end_time")
-                  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-              </div>
-            </div>
+            <x-forms.input-validation name="blackoutTimes.{{ $i }}.label"
+              wire:model="user.blackoutTimes.{{ $i }}.label" label="Activity"
+              placeholder="eg. Meeting, Sleeping" />
+
+            <x-forms.input-validation name="blackoutTimes.{{ $i }}.local_begin_time"
+              wire:model="user.blackoutTimes.{{ $i }}.local_begin_time"
+              label="Begin time (24-hr format)" placeholder="13:00" />
+
+            <x-forms.input-validation name="blackoutTimes.{{ $i }}.local_end_time"
+              wire:model="user.blackoutTimes.{{ $i }}.local_end_time"
+              label="End time (24-hr format)" placeholder="15:30" />
+
             <div class="space-y-6 sm:space-y-5 divide-y divide-gray-200">
-              <div class="pt-1 sm:pt-5">
+              <div class="pt-1">
                 <div role="group" aria-labelledby="label-recurring">
                   <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-baseline">
                     <div>
