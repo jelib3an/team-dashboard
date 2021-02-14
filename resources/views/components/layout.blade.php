@@ -4,17 +4,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+    rel="stylesheet" />
   <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
   <title>Team Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer>
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
   @livewireStyles
 </head>
 
 <body>
   {{ $slot }}
   @livewireScripts
+  <script
+    src="https://cdn.jsdelivr.net/combine/npm/alpinejs@2.8.0,npm/jquery@3.5.1,npm/select2@4.1.0-rc.0"
+    defer>
+  </script>
+  @stack('scripts')
 </body>
 
 </html>

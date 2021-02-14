@@ -38,14 +38,10 @@
           </label>
           <div class="mt-1 sm:mt-0 sm:col-span-2">
             @php
-              $timezones = collect(\App\Timezones\Timezones::$all)
-                  ->map(function ($timezone) {
-                      return ['id' => $timezone, 'text' => $timezone];
-                  })
-                  ->all();
+              $timezones = \App\Timezones\Timezones::$all;
             @endphp
-            <x-forms.select-searchable wire:model="user.timezone"
-              :options="json_encode($timezones)" />
+            <x-forms.select2 wire:model="user.timezone"
+              :options="array_combine($timezones, $timezones)" />
           </div>
         </div>
       </div>
