@@ -4,31 +4,8 @@
       <div class="space-y-6 sm:space-y-5">
         <div
           class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-          <label for="name" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-            Name
-          </label>
-          <div class="mt-1 sm:mt-0 relative sm:col-span-2">
-            <input wire:model="user.name" type="text" name="name" id="name"
-              autocomplete="given-name"
-              class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-            <div>
-              @error('user.name')
-                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                      clip-rule="evenodd" />
-                  </svg>
-                </div>
-              @enderror
-            </div>
-          </div>
-          <div>
-            @error('user.name')
-              <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-            @enderror
-          </div>
+          <x-forms.input-validation name="name" label="Name" wire:model="user.name"
+            placeholder="John" />
         </div>
 
         <div
@@ -54,37 +31,14 @@
         </div>
 
         @foreach ($this->user['blackoutTimes'] as $i => $blackoutTime)
-          <div wire:key="user-blackout-{{ $blackoutTime['id'] }}" class="space-y-4 sm:space-y-3">
+          <div wire:key="user-blackout-{{ $blackoutTime['id'] }}"
+            class="space-y-4 sm:space-y-3 pt-4">
             <div
               class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-              <label for="activity-{{ $i }}"
-                class="mt-4 block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                Activity
-              </label>
-              <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                <input wire:model="user.blackoutTimes.{{ $i }}.label" type="text"
-                  name="activity-{{ $i }}" id="activity-{{ $i }}"
-                  autocomplete="activity" placeholder="eg. Meeting, Sleeping"
-                  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                <div>
-                  @error("user.blackoutTimes.$i.label")
-                    <div
-                      class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                          clip-rule="evenodd" />
-                      </svg>
-                    </div>
-                  @enderror
-                </div>
-              </div>
-              <div>
-                @error("user.blackoutTimes.$i.label")
-                  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-              </div>
+
+              <x-forms.input-validation name="blackoutTimes.{{ $i }}.label"
+                wire:model="user.blackoutTimes.{{ $i }}.label" label="Activity"
+                placeholder="eg. Meeting, Sleeping" />
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
               <label for="begin-{{ $i }}"
@@ -97,7 +51,7 @@
                   placeholder="13:00"
                   class="max-w-lg block min-w-min shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
                 <div>
-                  @error("user.blackoutTimes.$i.local_begin_time")
+                  @error("blackoutTimes.$i.local_begin_time")
                     <div
                       class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +65,7 @@
                 </div>
               </div>
               <div>
-                @error("user.blackoutTimes.$i.local_begin_time")
+                @error("blackoutTimes.$i.local_begin_time")
                   <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
               </div>
@@ -127,7 +81,7 @@
                   placeholder="15:30"
                   class="max-w-lg block min-w-min shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
                 <div>
-                  @error("user.blackoutTimes.$i.local_end_time")
+                  @error("blackoutTimes.$i.local_end_time")
                     <div
                       class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +95,7 @@
                 </div>
               </div>
               <div>
-                @error("user.blackoutTimes.$i.local_end_time")
+                @error("blackoutTimes.$i.local_end_time")
                   <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
               </div>
@@ -156,7 +110,7 @@
                         Recurring
                       </div>
                       <div>
-                        @error("user.blackoutTimes.$i.days")
+                        @error("blackoutTimes.$i.days")
                           <p class="mt-2 text-sm text-red-600">{{ $message }}
                           </p>
                         @enderror

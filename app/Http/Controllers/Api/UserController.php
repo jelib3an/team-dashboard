@@ -96,6 +96,9 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+
+        $request->validate($this->rules($id), $this->messages());
+
         $user->fill($request->only(['name', 'timezone']));
         $user->save();
 
