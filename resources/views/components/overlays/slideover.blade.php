@@ -1,6 +1,4 @@
-<div x-data="{ open: false }">
-  <span @click.prevent="open = true">{{ $button }}</span>
-
+<div x-data="{ open: false }" x-on:{{ $listen }}.window="open = !open">
   <div x-cloak x-show="open">
     <div class="fixed inset-0 overflow-hidden">
       <div class="absolute inset-0 overflow-hidden">
