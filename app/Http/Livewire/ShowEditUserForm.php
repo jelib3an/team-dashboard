@@ -39,8 +39,6 @@ class ShowEditUserForm extends Component
 
     public function save()
     {
-        //$this->validate();
-
         $response = app()->call(UserController::class.'@update', [
             'request' => (new Request())->merge($this->user),
             'id' => $this->user['id'],

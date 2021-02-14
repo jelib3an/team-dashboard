@@ -11,6 +11,8 @@ class UserSwitcher extends Component
 {
     public $selectedUserId;
 
+    protected $listeners = ['userUpdated' => '$refresh'];
+
     public function mount()
     {
         $this->selectedUserId = optional(request()->user())->id;
