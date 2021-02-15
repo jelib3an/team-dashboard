@@ -25,12 +25,15 @@
           <h3 class="text-lg leading-6 font-medium text-gray-900">
             Unavailable Times
           </h3>
+          <div class="flex justify-end">
+            <x-elements.button-indigo wire:click="addBlackoutTime()">
+              New activity
+            </x-elements.button-indigo>
+          </div>
         </div>
 
         @foreach ($this->user['blackoutTimes'] as $i => $blackoutTime)
-          <div wire:key="user-blackout-{{ $blackoutTime['id'] }}"
-            class="pt-4 space-y-6 sm:space-y-5">
-
+          <div class="pt-4 space-y-6 sm:space-y-5">
             <x-forms.input-validation name="blackoutTimes.{{ $i }}.label"
               wire:model="user.blackoutTimes.{{ $i }}.label" label="Activity"
               placeholder="eg. Meeting, Sleeping" />
@@ -93,6 +96,12 @@
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div class="flex justify-end">
+              <x-elements.button-gray wire:click="removeBlackoutTime({{ $i }})">
+                Remove {{ $blackoutTime['label'] }}
+              </x-elements.button-gray>
             </div>
           </div>
         @endforeach

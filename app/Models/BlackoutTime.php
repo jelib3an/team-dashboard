@@ -10,6 +10,13 @@ class BlackoutTime extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['label', 'local_begin_time', 'local_end_time', 'days'];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array
