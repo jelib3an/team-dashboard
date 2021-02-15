@@ -2,6 +2,22 @@
   <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5 sm:border-t sm:border-gray-200">
     <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
       <div class="space-y-6 sm:space-y-5">
+        <div x-data="{ showConfirm: false }" class="flex justify-end">
+          <x-elements.button-indigo x-show="!showConfirm" @click="showConfirm = true">
+            Delete {{ $this->user['name'] }}
+          </x-elements.button-indigo>
+          <div x-cloak x-show="showConfirm">
+            <span class="text-sm text-red-600">
+              Really delete {{ $this->user['name'] }}?
+            </span>
+            <x-elements.button-gray @click="showConfirm = false">
+              Cancel
+            </x-elements.button-gray>
+            <x-elements.button-indigo wire:click="deleteUser()">
+              Do it!
+            </x-elements.button-indigo>
+          </div>
+        </div>
 
         <x-forms.input-validation name="name" label="Name" wire:model="user.name"
           placeholder="John" />

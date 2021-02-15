@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class User extends JsonResource
+class Team extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +14,6 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        return array_merge(
-            parent::toArray($request),
-            [
-                'team' => new Team($this->team),
-                'blackoutTimes' => BlackoutTime::collection($this->blackoutTimes),
-            ]
-        );
+        return parent::toArray($request);
     }
 }

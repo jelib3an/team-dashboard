@@ -71,6 +71,16 @@ class ShowEditUserForm extends Component
         $this->emit('userUpdated', $this->user);
     }
 
+    public function deleteUser()
+    {
+        $slug = $this->user['team']['slug'];
+        $response = app()->call(UserController::class.'@destroy', [
+            'id' => $this->user['id'],
+        ]);
+
+        return redirect()->to("/$slug");
+    }
+
     public function render()
     {
         return view('livewire.show-edit-user-form');

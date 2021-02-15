@@ -40,6 +40,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the team the user belongs to.
+     */
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    /**
      * Get the blackout times for the user.
      */
     public function blackoutTimes()
