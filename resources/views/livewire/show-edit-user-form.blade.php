@@ -107,7 +107,9 @@
               <x-feedback.alert-success :message="session('userFormMessage')" />
             @endif
           </div>
-          <x-elements.button-gray @click.prevent="open = false">Close</x-elements.button-gray>
+          <x-elements.button-gray x-data="" @click="$dispatch('toggle-edit-overlay')">
+            Close
+          </x-elements.button-gray>
           <x-elements.button-gray wire:click="resetForm">Reset</x-elements.button-gray>
           <x-elements.button-indigo type="submit">Save</x-elements.button-indigo>
         </div>

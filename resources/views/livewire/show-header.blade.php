@@ -8,19 +8,23 @@
     @livewire('user-switcher')
     <div>
       @if (isset($this->user['name']))
-        <span x-data @click="$dispatch('open-edit-overlay')">
-          <x-elements.button-gray>Edit your settings</x-elements.button-gray>
-        </span>
-        <x-overlays.slideover listen="open-edit-overlay" :title="$this->user['name'].': Edit'">
-          @livewire('show-edit-user-form', ['user' => $this->user])
-        </x-overlays.slideover>
+        <div>
+          <x-elements.button-gray x-data="" @click="$dispatch('toggle-edit-overlay')">
+            Edit your settings
+          </x-elements.button-gray>
+          <x-overlays.slideover listen="toggle-edit-overlay" :title="$this->user['name'].': Edit'">
+            @livewire('show-edit-user-form', ['user' => $this->user])
+          </x-overlays.slideover>
+        </div>
       @endif
     </div>
-    <span x-data @click="$dispatch('open-add-overlay')">
-      <x-elements.button-indigo>Add user</x-elements.button-indigo>
-    </span>
-    <x-overlays.slideover listen="open-add-overlay" :title="$this->teamName.': Add'">
-      @livewire('show-add-user-form', ['teamId' => $this->teamId])
-    </x-overlays.slideover>
+    <div>
+      <x-elements.button-indigo x-data="" @click="$dispatch('toggle-add-overlay')">
+        Add user
+      </x-elements.button-indigo>
+      <x-overlays.slideover listen="toggle-add-overlay" :title="$this->teamName.': Add'">
+        @livewire('show-add-user-form', ['teamId' => $this->teamId])
+      </x-overlays.slideover>
+    </div>
   </div>
 </div>
