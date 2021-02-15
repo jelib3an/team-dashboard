@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User as ResourcesUser;
+use App\Models\BlackoutTime;
 use App\Models\User;
 use App\Timezones\Timezones;
 use Illuminate\Http\Request;
@@ -102,7 +103,12 @@ class UserController extends Controller
         $user->fill($request->only(['name', 'timezone']));
         $user->save();
 
-        // TODO save blackout times
+        if ($request->has('blackoutTimes')) {
+            $user->blackoutTimes()->delete();
+            foreach ($request->get('blackoutTimes') as $blackoutTime) {
+                $user->blackoutTimes()->save(new BlackoutTime($blackoutTime));
+            }
+        }
 
         return new ResourcesUser($user);
     }
