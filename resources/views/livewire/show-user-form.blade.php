@@ -2,22 +2,24 @@
   <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5 sm:border-t sm:border-gray-200">
     <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
       <div class="space-y-6 sm:space-y-5">
-        <div x-data="{ showConfirm: false }" class="flex justify-end">
-          <x-elements.button-indigo x-show="!showConfirm" @click="showConfirm = true">
-            Delete {{ $this->user['name'] }}
-          </x-elements.button-indigo>
-          <div x-cloak x-show="showConfirm">
-            <span class="text-sm text-red-600">
-              Really delete {{ $this->user['name'] }}?
-            </span>
-            <x-elements.button-gray @click="showConfirm = false">
-              Cancel
-            </x-elements.button-gray>
-            <x-elements.button-indigo wire:click="deleteUser()">
-              Do it!
+        @if (isset($this->user['id']))
+          <div x-data="{ showConfirm: false }" class="flex justify-end">
+            <x-elements.button-indigo x-show="!showConfirm" @click="showConfirm = true">
+              Delete {{ $this->user['name'] }}
             </x-elements.button-indigo>
+            <div x-cloak x-show="showConfirm">
+              <span class="text-sm text-red-600">
+                Really delete {{ $this->user['name'] }}?
+              </span>
+              <x-elements.button-gray @click="showConfirm = false">
+                Cancel
+              </x-elements.button-gray>
+              <x-elements.button-indigo wire:click="deleteUser()">
+                Do it!
+              </x-elements.button-indigo>
+            </div>
           </div>
-        </div>
+        @endif
 
         <x-forms.input-validation name="name" label="Name" wire:model="user.name"
           placeholder="John" />
@@ -91,18 +93,22 @@
                         ];
                       @endphp
                       @foreach ($days as $key => $day)
+                        @php
+                          $prefix = $this->user['id'] ?? 'add';
+                        @endphp
                         <div class="max-w-lg space-y-4">
                           <div class="relative flex items-start">
                             <div class="flex items-center h-5">
                               <input wire:model="user.blackoutTimes.{{ $i }}.days"
                                 value="{{ $key }}"
-                                id="days-{{ $i }}-{{ $key }}"
-                                name="days-{{ $i }}-{{ $key }}"
+                                id="{{ $prefix }}-days-{{ $i }}-{{ $key }}"
+                                name="{{ $prefix }}-days-{{ $i }}-{{ $key }}"
                                 type="checkbox"
                                 class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                             </div>
                             <div class="ml-3 text-sm">
-                              <label for="days-{{ $i }}-{{ $key }}"
+                              <label
+                                for="{{ $prefix }}-days-{{ $i }}-{{ $key }}"
                                 class="font-medium text-gray-700">{{ $day }}</label>
                             </div>
                           </div>
@@ -132,7 +138,8 @@
               <x-feedback.alert-success :message="session('userFormMessage')" />
             @endif
           </div>
-          <x-elements.button-gray x-data="" @click="$dispatch('toggle-edit-overlay')">
+          <x-elements.button-gray x-data=""
+            @click="$dispatch('toggle-{{ isset($this->user['id']) ? 'edit' : 'add' }}-overlay')">
             Close
           </x-elements.button-gray>
           <x-elements.button-gray wire:click="resetForm">Reset</x-elements.button-gray>

@@ -3,24 +3,21 @@
 namespace App\Http\Livewire;
 
 use App\Http\Controllers\Api\UserController;
-use App\Http\Resources\BlackoutTime as ResourcesBlackoutTime;
+use App\Http\Livewire\Traits\WithBlackoutTimes;
 use App\Http\Resources\User as ResourcesUser;
-use App\Models\BlackoutTime;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Livewire\Component;
 
 class ShowEditUserForm extends Component
 {
-    protected $prefix = 'user';
+    use WithBlackoutTimes;
 
     public $user;
 
     protected $listeners = [
         'resetForm',
         'userSwitched',
-        'addBlackoutTime',
-        'removeBlackoutTime',
     ];
 
     public function mount(array $user)
@@ -39,23 +36,6 @@ class ShowEditUserForm extends Component
         if ($user) {
             $this->user = $user;
         }
-    }
-
-    public function addBlackoutTime()
-    {
-        $blackoutTime = new BlackoutTime([
-            'label' => '',
-            'local_begin_time' => '',
-            'local_end_time' => '',
-            'days' => [],
-        ]);
-        array_unshift($this->user['blackoutTimes'], json_decode((new ResourcesBlackoutTime($blackoutTime))->toJson(), true));
-    }
-
-    public function removeBlackoutTime(int $index)
-    {
-        unset($this->user['blackoutTimes'][$index]);
-        $this->user['blackoutTimes'] = array_values($this->user['blackoutTimes']);
     }
 
     public function save()
@@ -83,6 +63,6 @@ class ShowEditUserForm extends Component
 
     public function render()
     {
-        return view('livewire.show-edit-user-form');
+        return view('livewire.show-user-form');
     }
 }

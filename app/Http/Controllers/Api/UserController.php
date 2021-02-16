@@ -21,9 +21,10 @@ class UserController extends Controller
         ];
     }
 
-    public static function rules($id)
+    public static function rules($id = null)
     {
         return  [
+            'team_id' => 'required|exists:teams,id',
             'name' => [
                 'required',
                 'string',
@@ -73,7 +74,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->rules(), $this->messages());
+
+        $user = new User();
+        $user->fill($request->only(['name', 'timezone']));
+        $user->team()->associate($request->get('team_id'));
+        $user->save();
+
+        if ($request->has('blackoutTimes')) {
+            foreach ($request->get('blackoutTimes') as $blackoutTime) {
+                $user->blackoutTimes()->save(new BlackoutTime($blackoutTime));
+            }
+        }
+
+        return new ResourcesUser($user);
     }
 
     /**
