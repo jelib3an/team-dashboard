@@ -2,7 +2,7 @@
 
 Specially designed for remote teams spread across multiple timezones. Dashboard allows user to see the local times of team members and whether they are currently available. Can also preview future times to make meeting scheduling easier.
 
-Built with Laravel Livewire. 
+Built with [Laravel Livewire](https://laravel-livewire.com/). 
 
 ## Demo
 
