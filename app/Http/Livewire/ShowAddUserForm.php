@@ -36,6 +36,7 @@ class ShowAddUserForm extends Component
 
     public function save()
     {
+        return false;
         $response = app()->call(UserController::class.'@store', [
             'request' => (new Request())->merge($this->user),
         ]);

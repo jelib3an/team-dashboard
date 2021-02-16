@@ -40,6 +40,7 @@ class ShowEditUserForm extends Component
 
     public function save()
     {
+        return false;
         $response = app()->call(UserController::class.'@update', [
             'request' => (new Request())->merge($this->user),
             'id' => $this->user['id'],
@@ -53,6 +54,7 @@ class ShowEditUserForm extends Component
 
     public function deleteUser()
     {
+        return false;
         $slug = $this->user['team']['slug'];
         $response = app()->call(UserController::class.'@destroy', [
             'id' => $this->user['id'],
